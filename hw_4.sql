@@ -33,10 +33,10 @@ where book_ref like '3A4%';
 select 'Данные по месту: номер места ' || seat_no  AS seat_no from seats
 where aircraft_code = '320' and fare_conditions = 'Business';
 
---9.         Найти максимальную и минимальную сумму бронирования в 2017 году;
+--9.         Найти максимальную и минимальную сумму бронирования в 2016 году;
 select max(total_amount), min(total_amount)
 from bookings
-where to_char(book_date, 'YYYY') = '2017';
+where to_char(book_date, 'YYYY') = '2016';
 
 --10.      Найти количество мест во всех самолетах, вывести в разрезе самолетов;
 select aircraft_code, count(seat_no)
@@ -61,7 +61,7 @@ group by passenger_name
 having count(ticket_no) > 2000
 order by count(ticket_no) desc;
 
---14.      Вывести дни в сентябре 2017 с количеством рейсов больше 500.
+--14.      Вывести дни в сентябре 2016 с количеством рейсов больше 500.
 select TO_CHAR(scheduled_departure, 'YYYY-MM-DD') as day, count(flight_id)
 from flights
 where to_char(scheduled_departure, 'YYYY-MM') = '2016-09'
@@ -79,24 +79,24 @@ select aircraft_code, array_agg(seat_no) as seats
 from seats
 group by aircraft_code;
 
---17.      Вывести информацию по всем рейсам из аэропортов в г.Москва за сентябрь 2017
+--17.      Вывести информацию по всем рейсам из аэропортов в г.Москва за сентябрь 2016
 select *
 from airports
 join flights on airports.airport_code = flights.departure_airport
-where city = 'Москва' and to_char(scheduled_departure, 'YYYY-MM') = '2017-09';
+where city = 'Москва' and to_char(scheduled_departure, 'YYYY-MM') = '2016-09';
 
---18.      Вывести кол-во рейсов по каждому аэропорту в г.Москва за 2017
+--18.      Вывести кол-во рейсов по каждому аэропорту в г.Москва за 2016
 select airport_name, count(flight_id) as count_flight
 from airports
 join flights on airports.airport_code = flights.departure_airport
-where city = 'Москва' and TO_CHAR(scheduled_departure, 'YYYY') = '2017'
+where city = 'Москва' and TO_CHAR(scheduled_departure, 'YYYY') = '2016'
 group by airport_name;
 
---19.      Вывести кол-во рейсов по каждому аэропорту, месяцу в г.Москва за 2017
+--19.      Вывести кол-во рейсов по каждому аэропорту, месяцу в г.Москва за 2016
 select airport_name, departure_airport, TO_CHAR(scheduled_departure, 'MM') as month, count(flight_id)
 from flights
 join airports on flights.departure_airport=airports.airport_code
-where city = 'Москва' and TO_CHAR(scheduled_departure, 'YYYY') = '2017'
+where city = 'Москва' and TO_CHAR(scheduled_departure, 'YYYY') = '2016'
 group by airport_name, departure_airport, TO_CHAR(scheduled_departure, 'MM')
 ORDER BY airport_name, departure_airport, TO_CHAR(scheduled_departure, 'MM');
 
